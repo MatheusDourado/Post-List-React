@@ -58,23 +58,31 @@ export class Home extends Component {
         }) : posts
 
         return (
-            <section className='container'>                
-                <InputSearch searchValue={searchValue} handleChange={this.handleChange}/>
-                
-                {filteredPosts.length > 0 && (
-                    <Post posts={ filteredPosts }/> 
-                )}
-
-                {filteredPosts.length === 0 && (
-                    <p className='notFound'>not found</p> 
-                )}
-
-                <div className="button-container">
-                    {!searchValue && (
-                        <Button disabled={noMorePosts} text={"load posters"} onClick={this.loadMorePosts}/>
+            <>
+                <section className='container'>                
+                    <InputSearch searchValue={searchValue} handleChange={this.handleChange}/>
+                    
+                    {filteredPosts.length > 0 && (
+                        <Post posts={ filteredPosts }/> 
                     )}
-                </div>
-            </section>
+
+                    {filteredPosts.length === 0 && (
+                        <p className='notFound'>not found</p> 
+                    )}
+
+                    <div className="button-container">
+                        {!searchValue && (
+                            <Button disabled={noMorePosts} text={"load posters"} onClick={this.loadMorePosts}/>
+                        )}
+                    </div>
+                </section>
+
+                <footer>
+                    <div>
+                        <p>By <span>Matheus Dourado</span> {new Date().getFullYear()} </p>
+                    </div>
+                </footer>
+            </>
         )
     }
 }
