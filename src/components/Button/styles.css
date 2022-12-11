@@ -1,0 +1,25 @@
+.btn {
+    min-width: 250px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    color: rgb(255, 255, 255);
+    /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.35); */
+    background-color: rgb(67, 45, 194);
+    text-transform: capitalize;
+    transition: ease-in-out 300ms background-color;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgb(9, 0, 63);
+    color: white;
+}
+
+.btn:disabled {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.164);
+    background-color: rgb(202, 202, 202);
+    cursor: not-allowed;
+}
