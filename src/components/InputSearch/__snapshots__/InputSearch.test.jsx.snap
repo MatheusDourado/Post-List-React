@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InputSearch/> should match snaphot 1`] = `
+<div
+  class="header-list"
+>
+  <h2
+    class="title-2"
+  >
+     Post list 
+  </h2>
+  <input
+    class="search"
+    placeholder="Digite aqui..."
+    type="search"
+    value=""
+  />
+</div>
+`;

@@ -1,77 +1,87 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-import './styles.css';
+import "./styles.css";
 
-import { Post } from '../../components/Post';
-import { loadPosts } from '../../utils/load-posts';
-import { Button } from '../../components/Button';
-import { InputSearch } from '../../components/InputSearch';
-
+import { Post } from "../../components/Post";
+import { loadPosts } from "../../utils/load-posts";
+import { Button } from "../../components/Button";
+import { InputSearch } from "../../components/InputSearch";
 
 export const Home = () => {
-    const [posts, setPosts] = useState([])
-    const [allPosts, setAllPosts] = useState([])
-    const [page, setPage] = useState(0)
-    const [postsPerPage] = useState(10)
-    const [searchValue, setSearchValue] = useState("")
+	const [posts, setPosts] = useState([]);
+	const [allPosts, setAllPosts] = useState([]);
+	const [page, setPage] = useState(0);
+	const [postsPerPage] = useState(10);
+	const [searchValue, setSearchValue] = useState("");
 
-    const noMorePosts = page + postsPerPage >= allPosts.length
-    
-    const filteredPosts = !!searchValue ? allPosts.filter(post => {
-        return post.title.toLowerCase().includes(searchValue.toLowerCase())
-    }) : posts
+	const noMorePosts = page + postsPerPage >= allPosts.length;
 
-    const handleLoadPosts = useCallback(async (page, postsPerPage) => {
-        const postsAndPhotos = await loadPosts()
+	const filteredPosts = searchValue
+		? allPosts.filter((post) => {
+				return post.title
+					.toLowerCase()
+					.includes(searchValue.toLowerCase());
+		  })
+		: posts;
 
-        setPosts(postsAndPhotos.slice(page, postsPerPage))
-        setAllPosts(postsAndPhotos)
-    }, [])
+	const handleLoadPosts = useCallback(async (page, postsPerPage) => {
+		const postsAndPhotos = await loadPosts();
 
-    useEffect(() => {
-        handleLoadPosts(0, postsPerPage)
-    }, [handleLoadPosts, postsPerPage])
+		setPosts(postsAndPhotos.slice(page, postsPerPage));
+		setAllPosts(postsAndPhotos);
+	}, []);
 
-    const loadMorePosts = () => {
-        const nextPage = page + postsPerPage
-        const nextPosts = allPosts.slice(nextPage, nextPage + postsPerPage)
+	useEffect(() => {
+		handleLoadPosts(0, postsPerPage);
+	}, [handleLoadPosts, postsPerPage]);
 
-        posts.push(...nextPosts)
+	const loadMorePosts = () => {
+		const nextPage = page + postsPerPage;
+		const nextPosts = allPosts.slice(nextPage, nextPage + postsPerPage);
 
-        setPosts(posts)
-        setPage(nextPage)
-    }
+		posts.push(...nextPosts);
+		setPosts(posts);
+		setPage(nextPage);
+	};
 
-    const handleChange = (e) => {
-        const { value } = e.target
-        setSearchValue(value)
-    }
+	const handleChange = (e) => {
+		const { value } = e.target;
+		setSearchValue(value);
+	};
 
-    return (
-        <>
-            <section className='container'>                
-                <InputSearch searchValue={searchValue} handleChange={handleChange}/>
-                
-                {filteredPosts.length > 0 && (
-                    <Post posts={ filteredPosts }/> 
-                )}
+	return (
+		<>
+			<section className="container">
+				<InputSearch
+					searchValue={searchValue}
+					handleChange={handleChange}
+				/>
 
-                {filteredPosts.length === 0 && (
-                    <p className='notFound'>not found</p> 
-                )}
+				{filteredPosts.length > 0 && <Post posts={filteredPosts} />}
 
-                <div className="button-container">
-                    {!searchValue && (
-                        <Button disabled={noMorePosts} text={"load posters"} onClick={loadMorePosts}/>
-                    )}
-                </div>
-            </section>
+				{filteredPosts.length === 0 && (
+					<p className="notFound">not found</p>
+				)}
 
-            <footer>
-                <div>
-                    <p>By <span>Matheus Dourado</span> {new Date().getFullYear()} </p>
-                </div>
-            </footer>
-        </>
-    )
-}
+				<div className="button-container">
+					{!searchValue && (
+						<Button
+							disabled={noMorePosts}
+							text={"load posters"}
+							onClick={loadMorePosts}
+						/>
+					)}
+				</div>
+			</section>
+
+			<footer>
+				<div>
+					<p>
+						By <span>Matheus Dourado</span>{" "}
+						{new Date().getFullYear()}{" "}
+					</p>
+				</div>
+			</footer>
+		</>
+	);
+};
